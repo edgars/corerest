@@ -8,10 +8,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <!-- title>Initial Redirect Page</title -->
    </head>
    <body>
-      <%// response.sendRedirect("welcome.jsf"); %>
       <%
 		response.sendRedirect(basePath+"index.faces");
 	  %>
-   <body>
+   </body>
 </html>
 

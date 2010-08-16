@@ -4,15 +4,11 @@
                                    		http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.0.2.xsd">
 
    <!-- Begin RewriteRules -->
-   
-   <rewrite trailingSlash="append" toCase="lowercase" /> 
-   <rewrite match="^/old-url/(\w+)/$" substitute="/new_url/$1/" redirect="301" />
-   
-   	<url-mapping id="home"> 
-		<pattern value="/" /> 
-		<view-id>index.faces</view-id>
-	</url-mapping> 
 
+<url-mapping id="home">
+   <pattern value="/" />
+   <view-id>/index.faces</view-id>
+</url-mapping>
    <!-- Begin UrlMappings 
    
 
