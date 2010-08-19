@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<f:view locale="#{facesContext.application.defaultLocale}">
+
+<head>
+  <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+  <meta name="author" content="Edgar Silva" />
+  <meta name="keywords" content="corerest, rest, Rest, WebServices, Groovy" />
+  <meta name="description" content="A Cloud platform for REST Services" />
+
+  <title>( | coreREST: A Cloud platform for REST Services | )</title>
+  <script src="#{facesContext.externalContext.requestContextPath}/js/codemirror.js" type="text/javascript"></script>
+
+  <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/cloudyDay.css" media="screen, tv, projection" />
+</head>
+
+<body>
+
+<!-- Main site container starts -->
+<div id="siteBox">
+
+
+
+  <!-- Header box starts: page title and top link bar -->
+  <div id="headerBox">
+    <div id="headerLeft">
+      <div class="verticalSpacer">&nbsp;</div>
+    <img src="#{facesContext.externalContext.requestContextPath}/images/corerest.png"></img>
+    </div>
+    <div id="headerRight">
+      <div class="verticalSpacer">&nbsp;</div>
+      <a href="#{facesContext.externalContext.requestContextPath}/" title="home" class="home">home</a> <span class="noDisplay"> | </span>
+      <a href="#{facesContext.externalContext.requestContextPath}/services" title="Services, View or Add new ones" class="gallery">services</a> <span class="noDisplay"> | </span>
+      <a href="index.html" title="about" class="about">rules</a> <span class="noDisplay"> | </span>
+      <a href="index.html" title="links" class="links">technologies</a> <span class="noDisplay"> | </span>
+      <a href="index.html" title="email" class="email">contact</a>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Right content column starts: content, images and whatever else you want -->
+  <div id="rightColumn">
+  
+    <div class="body">
+    <h:messages id="messages" globalOnly="true" styleClass="message"
+        errorClass="errormsg" infoClass="infomsg" warnClass="warnmsg"
+        rendered="#{showGlobalMessages != 'false'}"/>
+    <ui:insert name="body"/>
+  </div>
+
+   </div>
+
+  <div id="footerBox">
+
+    <div id="footerLeft">
+	  <a href="http://validator.w3.org/check?uri=referer" title="validate XHTML">valid XHTML</a> | <a href="http://jigsaw.w3.org/css-validator" title="validate CSS">valid CSS</a> | 
+    </div>
+
+    <div id="footerRight">
+	 nuvemware Tecnologia do Brasil
+    </div>
+
+  </div>
+
+
+</div>
+
+    <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea('formservice:code', {
+        parserfile: ["#{facesContext.externalContext.requestContextPath}parsepython.js"],
+        stylesheet: "#{facesContext.externalContext.requestContextPath}css/pythoncolors.css",
+        path: "#{facesContext.externalContext.requestContextPath}js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        parserConfig: {'pythonVersion': 2, 'strictErrors': true}
+    });
+</script>
+</body>
+</f:view>
+</html>

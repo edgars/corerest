@@ -3,9 +3,24 @@
  
 <url-mapping id="home">
    <pattern value="/" />
-   <view-id>/index.faces</view-id>
+   <view-id>/home.faces</view-id>
 </url-mapping>
 
+
+<url-mapping id="services">
+   <pattern value="/services" />
+   <view-id>/services.faces</view-id>
+</url-mapping>
+
+<url-mapping id="servicesAdd">
+   <pattern value="/add" />
+   <view-id>/addservice.faces</view-id>
+</url-mapping>
+
+<url-mapping id="source">
+   <pattern value="/source"/>
+   <view-id>/source.faces</view-id>
+</url-mapping>
 
 
    <!-- Begin UrlMappings 

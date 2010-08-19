@@ -1,0 +1,451 @@
+
+    body {
+      font: 0.8em arial, sans-serif;
+      color: steelblue;
+      background-color: #FFFFFF;
+      margin: 20px 40px 20px 40px;
+    }
+
+    #siteBox {
+      width: 99%;
+      float: left;
+      background: url(../images/logo.gif) no-repeat left bottom;
+    }
+    
+/* -- Form -- */      
+    
+    input[type=submit], input[type=button] {
+	margin: 5px 5px 5px 0;
+	cursor: pointer;
+	font-family:sans;
+	font-style:italic;
+	font-weight:bold;font-size: 18pt;
+}
+
+input[type=text], input[type=password], select {
+	  font-family:Verdana,Tahoma,Arial,Sans-serif;
+	font-weight:bold;
+	font-size: 18pt;
+	margin: 5px 5px 5px 0;
+}
+    
+.panelGrid {
+	font-family:Arial,Verdana,Tahoma,Sans-serif;
+	font-weight:bold;
+	font-size: 15pt;
+	margin: 5px 5px 5px 0;
+}
+       
+/* -- Header definitions -- */    
+    
+    
+
+    #headerBox {
+      float: left;
+      width: 100%;
+      height: 115px;
+      font-size: 1.5em;
+      font-weight: bold;
+      background: url(../images/hdr_bg.gif) repeat-x left bottom;
+
+    }
+
+    #headerLeft {
+      float: left;
+      width: 39%;
+      height: 50px;
+      background: url(../images/hdr_left.gif) no-repeat left bottom;
+    }
+
+    #headerRight {
+      float: right;
+      width: 59%;
+      height: 50px;
+      text-align: right;
+      background: url(../images/hdr_right.gif) no-repeat right bottom;
+    }
+    
+  #submenu {
+      width: 59%;
+      height: 60px;
+      text-align: left;
+
+    }
+
+
+
+/* -- Header link bar definitions -- */
+
+
+
+    #submenu a {
+      padding-left: 20px;
+      text-decoration: none;
+      color: #999999;
+    }
+
+    #submenu a:hover {
+      color: #444444;
+
+    }
+
+    #submenu a.add:hover {
+	  color: #444444;
+	  background: url(../images/add.jpg) no-repeat left center;
+    }
+    
+    #submenu a.gallery:hover {
+	  color: #444444;
+	  background: url(../images/icn_gallery.gif) no-repeat left center;
+    }
+
+
+    #headerRight a {
+      padding-left: 20px;
+      text-decoration: none;
+      color: #999999;
+    }
+
+    #headerRight a:hover {
+      color: #444444;
+
+    }
+
+    #headerRight a.home:hover {
+	  color: #444444;
+	  background: url(../images/icn_home.gif) no-repeat left center;
+    }
+
+    #headerRight a.gallery:hover {
+	  color: #444444;
+	  background: url(../images/icn_gallery.gif) no-repeat left center;
+    }
+
+    #headerRight a.about:hover {
+	  color: #444444;
+	  background: url(../images/icn_about.gif) no-repeat left center;
+    }
+
+    #headerRight a.links:hover {
+	  color: #444444;
+	  background: url(../images/icn_links.gif) no-repeat left center;
+    }
+
+
+    #headerRight a.email:hover {
+	  color: #444444;
+	  background: url(../images/icn_email.gif) no-repeat left center;
+    }
+
+
+
+/* -- Footer definitions -- */
+
+
+
+    #footerBox {
+      float: left;
+      width: 100%;
+      height: 25px;
+      font-size: 0.8em;
+      color: #999999;
+      border-top: 1px solid #D1D1D1;
+    }
+
+    #footerLeft {
+      float: left;
+      width: 49%;
+      text-align: left;
+          }
+
+    #footerRight {
+      float: right;
+      width: 49%;
+      text-align: right;      
+    }
+
+
+
+/* -- Content column & layout definitions -- */
+
+
+
+    #leftColumn {
+      float: left;
+      width: 15%;
+      padding: 0 5px 5px 5px;
+      margin: 1.0em 0 1.0em 0;
+    }
+
+
+    .leftColumnBox {
+      float: left;
+      width: 100%;
+      margin-bottom: 1.4em;
+      padding-top: 5px;
+      border-top: 1px solid #444444;
+      border-bottom: 1px solid #444444;
+      background: url(../images/news_bg.gif) repeat left bottom;
+    }
+
+    #leftColumn p {
+      margin-top: 1px;
+    }
+
+    #leftColumn h1 {
+      clear: both;
+      font-size: 18pt;
+      margin-bottom: 1px;
+    }
+
+    #rightColumn {
+      float: right;
+      width: 98%;
+    }
+
+
+    #leftColumn p a,
+    #rightColumn p a,
+    #rightColumn ul a,
+    #footerBox a {
+      text-decoration: none;
+      color: #999999;
+      background: #EEEEEE;
+
+    }
+
+    #leftColumn p a:hover,
+    #rightColumn p a:hover,
+    #rightColumn ul a:hover,
+    #footerBox a:hover {
+      color: #111111;
+      background: #CCCCCC url(../images/a_hover.gif) repeat-x left bottom;
+    }
+
+    #rightColumn h1 {
+      clear: both;
+      font-size: 16pt;
+      margin-top: 1.0em;
+      border-top: 1px solid #444444;
+      border-bottom: 1px solid #444444;
+      background: url(../images/news_bg.gif) repeat left bottom;
+    }
+
+
+
+/* -- Layout class definitions -- */
+
+
+
+    .subHeading {
+      display: block;
+      clear: both;
+      font-size: 0.85em;
+      font-weight: bold;
+    }
+    
+    .noDisplay  {
+      display: none;
+    }
+
+    .bugFix {
+      height: 1px;
+    }
+
+    .bigRightChar, .bigLeftChar {
+      font-size: 5.0em;  
+    }
+
+    .bigRightChar {
+      float: right;
+      width: 11%;
+      text-align: left;
+    }
+
+    .bigLeftChar {
+      float: left;
+      width: 10%;
+      text-align: right;          
+    }
+    
+    .center {
+      text-align: center;
+    }
+    
+    .verticalSpacer {
+      height: 1.3em;
+    }       
+    
+    
+    
+/* -- Element class definitions -- */    
+    
+    
+    
+    acronym {
+      cursor: help;
+      background-color: steelblue;
+      border: 1px solid #D2D2D2;      
+    }
+    
+    ul {
+      margin-left: 2.0em;
+      padding-left: 2.0em;
+      list-style-image: url(../images/bullet.gif);
+    }
+
+    ul li:hover {
+      list-style-image: url(../images/bullet_on.gif);
+    }   
+    
+    p {
+      margin: 15px 0 15px 0;
+    }    
+    
+    
+
+/* -- Image class definitions -- */
+
+
+
+    .imgBlock {
+      float: left;
+      width: 75%;
+      text-align: center;
+      padding-left: 10px;
+      margin-bottom: 1.0em;
+    }
+
+    .imgBlock .imgThree {
+      padding: 0 2% 0 2%;
+    }
+
+    .imgLeft {
+      float: left;
+      padding: 5px;      
+    }
+    
+    .imgRight {
+      float: right;
+      padding: 5px;      
+    }    
+
+    .imgText {
+      display: block;
+      font-size: 0.7em;
+    }
+
+
+
+/* -- Form element class definitions -- */
+
+
+
+    .inputField {
+      font-size: 0.70em;
+      border: 1px solid #D2D2D2;
+      background-color: #FFFFFF;
+    }
+
+    .inputField:focus {
+      color: #444444;
+      border: 1px solid #999999;
+    }
+ 
+    
+    
+/* -- Calendar definitions -- */    
+    
+    
+    
+    .calendar {      
+      width: 90%;
+      float: right;      
+      text-align: center;
+      padding-top: 1em;
+    }
+    
+    .row {
+      width: 100%;
+      float: left;
+    }
+    
+    
+    .day, .blankDay, .currDay, .heading, .month {
+      width: 10%;
+      float: left;
+      margin: 2px;
+      font: 10px helvetica, sans-serif;
+      border: 1px solid #FFFFFF;      
+    }
+    
+    .day {
+      text-decoration: none;      
+      color: #AAAAAA;
+      border: 1px solid #D2D2D2;
+    }
+    
+    .day:hover {            
+      color: #AAAAAA;
+      background-color: #EEEEEE;
+      border: 1px solid #AAAAAA;
+    }    
+    
+    .currDay {
+      cursor: help;
+      color: #FFFFFF;
+      background-color: #AAAAAA;
+      border: 1px solid #AAAAAA;      
+    }
+    
+    .heading {     
+      color: #AAAAAA;
+    }    
+    
+    .month {      
+      width: 90%;
+      text-align: left;
+      vertical-align: middle;
+      color: #AAAAAA;
+    }
+    
+    .prevMonth {
+      text-decoration: none;
+      background: url(../images/icn_prev.gif) no-repeat center center;
+    }
+    
+    .prevMonth:hover {
+      text-decoration: none;
+      background: url(../images/icn_prev_on.gif) no-repeat center center;
+    }        
+    
+    .nextMonth {
+      text-decoration: none;
+      background: url(../images/icn_next.gif) no-repeat center center;
+    } 
+    
+    .nextMonth:hover {
+      text-decoration: none;
+      background: url(../images/icn_next_on.gif) no-repeat center center;
+    }  
+    
+    .prevYear {
+      text-decoration: none;
+      background: url(../images/icn_prev_yr.gif) no-repeat center center;
+    }
+    
+    .prevYear:hover {
+      text-decoration: none;
+      background: url(../images/icn_prev_yr_on.gif) no-repeat center center;
+    }        
+    
+    .nextYear {
+      text-decoration: none;
+      background: url(../images/icn_next_yr.gif) no-repeat center center;
+    } 
+    
+    .nextYear:hover {
+      text-decoration: none;
+      background: url(../images/icn_next_yr_on.gif) no-repeat center center;
+    }       
+    

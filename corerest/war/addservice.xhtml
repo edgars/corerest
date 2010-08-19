@@ -1,0 +1,58 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="layout/template.xhtml">
+
+    <ui:define name="body">
+
+ <h1>Service/Script Management </h1>
+      <div id="submenu">
+ <div class="verticalSpacer">&nbsp;</div>
+      <a href="#{facesContext.externalContext.requestContextPath}/services/add" title="Add a new Service in the CoreRest/GAE Environment" class="add">Add New Service</a> <span class="noDisplay"> | </span>
+      <a href="#{facesContext.externalContext.requestContextPath}/services" title="List All Services" class="gallery">List Services</a> <span class="noDisplay"> | </span>
+  </div>
+ 
+    <p><h:form id="formservice">
+						
+						
+							
+							<h:panelGrid columns="2" border="0" cellpadding="3" styleClass="panelGrid">
+							
+								Name: <h:inputText value="#{scriptService.script.name}" size="20"/>
+							    Language:<h:selectOneMenu value="#{scriptService.script.language}">
+							              <f:selectItem itemLabel="Groovy" itemValue="groovy" />
+                                          <f:selectItem itemLabel="Ruby" itemValue="ruby" />
+                                          <f:selectItem itemLabel="Python" itemValue="python" />
+                                          <f:selectItem itemLabel="PHP" itemValue="php" />
+                                          <f:selectItem itemLabel="Scala" itemValue="scala" />
+							    
+							    </h:selectOneMenu> 
+							    Description: <h:inputText value="#{scriptService.script.description}" size="10"/>
+							    URI Mapping:  <h:inputText value="#{scriptService.script.uri}" size="40"/>
+							    Enter with the Service/Script Source:
+
+
+							
+							  </h:panelGrid>	
+							 <div style="border: 1px solid black; padding: 0px;"> 
+                             <h:inputTextarea cols="100" rows="20" style="width:100%" value="#{scriptService.script.source}" id="code"></h:inputTextarea>
+							  </div>
+	
+							    
+							
+							   
+							    <h:commandButton value="Save Service" action="#{scriptService.save}"/>
+												
+							
+						
+						
+			</h:form>			
+  
+    </p>
+     
+
+    </ui:define>
+</ui:composition>

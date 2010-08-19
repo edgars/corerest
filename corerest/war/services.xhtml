@@ -1,0 +1,53 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="layout/template.xhtml">
+
+    <ui:define name="body">
+
+ <h1>Services </h1>
+     <div id="submenu">
+ <div class="verticalSpacer">&nbsp;</div>
+      <a href="#{facesContext.externalContext.requestContextPath}/add" title="Add a new Service in the CoreRest/GAE Environment" class="add">Add New Service</a> <span class="noDisplay"> | </span>
+      <a href="#{facesContext.externalContext.requestContextPath}/services" title="List All Services" class="gallery">List Services</a> <span class="noDisplay"> | </span>
+  </div>
+    <p>
+    Available Services:
+<h:form>    
+                                                                   
+<h:dataTable value="#{scriptService.scripts}" var="row" styleClass="gradient-style" rowClasses="even,odd">
+                                                                  
+  <h:column>
+    <f:facet name="header">
+      <h:outputText value="Name"/>
+    </f:facet>
+    <h:outputText value="#{row.name}"/>
+  </h:column>
+    <h:column>
+    <f:facet name="header">
+      <h:outputText value="Language"/>
+    </f:facet>
+    <h:outputText value="#{row.language}"/>
+  </h:column>
+    <h:column>
+    <f:facet name="header">
+      <h:outputText value="Description"/>
+    </f:facet>
+    <h:outputText value="#{row.description}"/>
+  </h:column>
+  <h:column>
+    <h:commandLink value="Delete" action="#{bean1.deleteAction}" immediate="true">
+      <f:setPropertyActionListener target="#{bean1.idToDelete}" value="#{row.id}"/>
+    </h:commandLink>
+  </h:column>
+</h:dataTable>
+</h:form>
+
+    </p>
+     
+
+    </ui:define>
+</ui:composition>

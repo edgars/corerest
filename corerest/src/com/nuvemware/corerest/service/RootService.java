@@ -38,6 +38,7 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Path("/")
+
 public class RootService {
 	
 	@GET
