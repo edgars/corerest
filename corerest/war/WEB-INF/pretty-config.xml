@@ -22,6 +22,18 @@
    <view-id>/source.faces</view-id>
 </url-mapping>
 
+<url-mapping id="editService">
+  <pattern value="/edit/#{name:scriptService.scriptName}" />
+  <view-id>/editservice.faces</view-id>
+  <action>#{scriptService.loadScript}</action>
+</url-mapping>
+
+<url-mapping id="editor">
+   <pattern value="/manage"/>
+   <view-id>/editservice.faces</view-id>
+</url-mapping>
+
+
 
    <!-- Begin UrlMappings 
    

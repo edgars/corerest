@@ -19,6 +19,11 @@
   <param-value>/service</param-value>
  </context-param>
  
+ <context-param>
+   <param-name>com.ocpsoft.pretty.BASE_PACKAGES</param-name>
+   <param-value>com.nuvemware.corerest.faces</param-value>
+</context-param>
+ 
 
  
  <!--

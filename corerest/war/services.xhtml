@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -7,6 +9,9 @@
     template="layout/template.xhtml">
 
     <ui:define name="body">
+    
+ 
+
 
  <h1>Services </h1>
      <div id="submenu">
@@ -15,38 +20,69 @@
       <a href="#{facesContext.externalContext.requestContextPath}/services" title="List All Services" class="gallery">List Services</a> <span class="noDisplay"> | </span>
   </div>
     <p>
-    Available Services:
 <h:form>    
-                                                                   
-<h:dataTable value="#{scriptService.scripts}" var="row" styleClass="gradient-style" rowClasses="even,odd">
-                                                                  
-  <h:column>
-    <f:facet name="header">
-      <h:outputText value="Name"/>
-    </f:facet>
-    <h:outputText value="#{row.name}"/>
-  </h:column>
-    <h:column>
-    <f:facet name="header">
-      <h:outputText value="Language"/>
-    </f:facet>
-    <h:outputText value="#{row.language}"/>
-  </h:column>
-    <h:column>
-    <f:facet name="header">
-      <h:outputText value="Description"/>
-    </f:facet>
-    <h:outputText value="#{row.description}"/>
-  </h:column>
-  <h:column>
-    <h:commandLink value="Delete" action="#{bean1.deleteAction}" immediate="true">
-      <f:setPropertyActionListener target="#{bean1.idToDelete}" value="#{row.id}"/>
-    </h:commandLink>
-  </h:column>
-</h:dataTable>
+
 </h:form>
 
     </p>
+
+		<h2 class="demoHeaders">Registered Services</h2>
+		<div id="accordion">
+			<div>
+				<h3><a href="#">Search for Services</a></h3>
+				<div>
+				
+				<h:form>  
+				
+							    <h:messages errorStyle="color:red;font-weight:bold; font-family:Verdana,Tahoma,Arial,Sans-serif;font-size:14pt;"/>
+									<span class="formInfo"><a href="tip/urimapping.html?width=375" class="jTip" id="one" name="Your service need a name!">Name:</a></span> <br></br>
+								<h:inputText value="#{scriptService.script.name}" size="20" required="true" requiredMessage="Hey Buddy! Your script must have a name, please fill it..."/>
+   	                            <h:commandButton value="Go" action="#{scriptService.save}"/>
+   	                            
+   	                            <p>Or, see the first 100 Stored Services below </p>
+
+                </h:form>
+				
+				</div>
+			</div>
+			   <ui:repeat value="#{scriptService.scripts}" var="row">
+			    
+      			<div>
+				<h3><a href="#">Service Name: <strong>#{row.name}</strong></a></h3>
+				<div>
+				<ul>
+				   <li>Description: <strong>#{row.description}</strong></li>
+				   <li>URI Mapping: <strong>#{row.language}</strong></li>
+				   <li>URI Mapping: <strong>#{row.uri}</strong></li>
+				   <li>Source: <strong>#{row.source}</strong></li>
+				   
+				</ul>
+				<h:panelGrid columns="4" cellpadding="20">
+				<h:outputLink value="http://java.net"> 
+				<h:graphicImage value="images/debugFodao.png" style="border:0" title="Click here to Debug the script service #{row.name}"/> </h:outputLink>
+
+				<h:outputLink value="http://java.net"> 
+				<h:graphicImage value="images/runFodao.png" style="border:0" title="Click here to Execute the script service #{row.name}"/> </h:outputLink>
+
+				<h:outputLink value="http://java.net"> 
+				<h:graphicImage value="images/info.png" style="border:0" title="Source: #{row.source}"/> </h:outputLink>
+
+				<h:outputLink value="http://java.net"> 
+				<h:graphicImage value="images/editfodao.png" style="border:0" title="Edit/Change this Script: #{row.name}"/> </h:outputLink>                
+                
+                
+                </h:panelGrid>
+                
+                
+				
+				</div>
+			</div>
+    </ui:repeat>
+			
+			
+		</div>
+	
+  
      
 
     </ui:define>

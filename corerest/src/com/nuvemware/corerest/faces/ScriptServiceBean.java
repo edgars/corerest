@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.googlecode.objectify.ObjectifyService;
 import com.nuvemware.corerest.pojo.Script;
 import com.nuvemware.corerest.pojo.dao.ScriptDataObject;
@@ -26,6 +27,8 @@ public class ScriptServiceBean implements Serializable {
 
      }  
 	private Script script;
+	
+	private String scriptName;
 
 
 	private List<Script> scripts;
@@ -34,7 +37,10 @@ public class ScriptServiceBean implements Serializable {
 	
 	public ScriptServiceBean() {
 		
-		script = new Script();
+		if (null ==script) {
+              
+			script = new Script();
+		}
 		
 	}
 	
@@ -68,4 +74,30 @@ public class ScriptServiceBean implements Serializable {
 		this.scripts = scripts;
 	}
 
+
+
+
+	public void setScriptName(String scriptName) {
+		this.scriptName = scriptName;
+	}
+
+
+
+
+	public String getScriptName() {
+		return scriptName;
+	}
+
+	
+	public String loadScript(){
+		
+		try {
+			this.script = (Script) dao.get("name", getScriptName());
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "pretty:edit";
+	}
 }

@@ -40,6 +40,9 @@ import com.googlecode.objectify.helper.DAOBase;
  * */
 
 public abstract class AbstractPersistentObject<T> extends DAOBase
+
+
+
 {
 	private Class<T> clazz;
 
@@ -90,6 +93,15 @@ public abstract class AbstractPersistentObject<T> extends DAOBase
 		T obj = ofy().get(this.clazz, id);
 		return obj;
 	}
+	
+	public Object get(String col,String value) throws EntityNotFoundException
+	{
+		Object obj = ofy().query(this.clazz).filter(col, value).get();
+		
+		return obj;
+	}
+	
+
 
 	public Object getPropertyValue(Object obj, String propertyName)
 	{
