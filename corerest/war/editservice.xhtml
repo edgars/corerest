@@ -5,8 +5,21 @@
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     template="layout/template.xhtml">
+    
+    
+
 
     <ui:define name="body">
+    
+        <script type="text/javascript">
+  var editorGroovy = CodeMirror.fromTextArea('code-groovy', {
+    height: "450px",
+    parserfile: ["parsegroovy.js","tokenizegroovy.js"],
+    stylesheet: "../css/groovycolors.css",
+    path: "../js/",
+    textWrapping: false
+  });
+</script>
 
  <h1>Service/Script Management </h1>
       <div id="submenu">
@@ -48,7 +61,7 @@
 							  </h:panelGrid>	
 							
 							 <div style="border: 1px solid black; padding: 0px;"> 
-                             <h:inputTextarea cols="100" rows="20" style="width:100%" value="#{scriptService.script.source}" id="code" 
+                             <h:inputTextarea cols="100" rows="20" style="width:100%" value="#{scriptService.script.source}" id="code-groovy" 
                              required="true" requiredMessage="You cannot save a Service without a Script! Create it please!"></h:inputTextarea>
 							  </div>
 		

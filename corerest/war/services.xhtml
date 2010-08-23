@@ -54,7 +54,10 @@
 				   <li>Description: <strong>#{row.description}</strong></li>
 				   <li>URI Mapping: <strong>#{row.language}</strong></li>
 				   <li>URI Mapping: <strong>#{row.uri}</strong></li>
-				   <li>Source: <strong>#{row.source}</strong></li>
+
+             	 <pre class="brush: #{row.language} ; collapse: true;">#{row.source}</pre>
+                  
+				  
 				   
 				</ul>
 				<h:panelGrid columns="4" cellpadding="20">
@@ -64,10 +67,7 @@
 				<h:outputLink value="http://java.net"> 
 				<h:graphicImage value="images/runFodao.png" style="border:0" title="Click here to Execute the script service #{row.name}"/> </h:outputLink>
 
-				<h:outputLink value="http://java.net"> 
-				<h:graphicImage value="images/info.png" style="border:0" title="Source: #{row.source}"/> </h:outputLink>
-
-				<h:outputLink value="http://java.net"> 
+				<h:outputLink value="/edit/#{row.name}"> 
 				<h:graphicImage value="images/editfodao.png" style="border:0" title="Edit/Change this Script: #{row.name}"/> </h:outputLink>                
                 
                 
