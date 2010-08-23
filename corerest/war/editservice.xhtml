@@ -11,17 +11,11 @@
 
     <ui:define name="body">
     
-        <script type="text/javascript">
-  var editorGroovy = CodeMirror.fromTextArea('code-groovy', {
-    height: "450px",
-    parserfile: ["parsegroovy.js","tokenizegroovy.js"],
-    stylesheet: "../css/groovycolors.css",
-    path: "../js/",
-    textWrapping: false
-  });
-</script>
+    
+    
 
- <h1>Service/Script Management </h1>
+
+ <h1>Service/Script Management : This #{ctx} ${pageContext.request.contextPath}</h1>
       <div id="submenu">
  <div class="verticalSpacer">&nbsp;</div>
       <a href="#{facesContext.externalContext.requestContextPath}/add" title="Add a new Service in the CoreRest/GAE Environment" class="add">Add New Service</a> <span class="noDisplay"> | </span>
@@ -61,7 +55,7 @@
 							  </h:panelGrid>	
 							
 							 <div style="border: 1px solid black; padding: 0px;"> 
-                             <h:inputTextarea cols="100" rows="20" style="width:100%" value="#{scriptService.script.source}" id="code-groovy" 
+                             <h:inputTextarea cols="100" rows="20" style="width:100%" value="#{scriptService.script.source}" id="code" 
                              required="true" requiredMessage="You cannot save a Service without a Script! Create it please!"></h:inputTextarea>
 							  </div>
 		
@@ -70,6 +64,18 @@
 			</h:form>			
   
     </p>
+         <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea('formservice:code', {
+    	height: "600px",
+        parserfile: ["#{facesContext.externalContext.requestContextPath}parsegroovy.js","#{facesContext.externalContext.requestContextPath}tokenizegroovy.js"],
+        stylesheet: "#{facesContext.externalContext.requestContextPath}/css/groovycolors.css",
+        path: "#{facesContext.externalContext.requestContextPath}/js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        parserConfig: {'strictErrors': true}
+    });
+</script>
      
 
     </ui:define>

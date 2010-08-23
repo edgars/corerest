@@ -8,6 +8,9 @@
 
     <ui:define name="body">
 
+
+
+
  <h1>Service/Script Management </h1>
       <div id="submenu">
  <div class="verticalSpacer">&nbsp;</div>
@@ -57,7 +60,20 @@
 			</h:form>			
   
     </p>
-     
+
+    <script type="text/javascript">
+    var editor = CodeMirror.fromTextArea('formservice:code', {
+    	height: "600px",
+        parserfile: ["#{facesContext.externalContext.requestContextPath}parsegroovy.js","#{facesContext.externalContext.requestContextPath}tokenizegroovy.js"],
+        stylesheet: "#{facesContext.externalContext.requestContextPath}/css/groovycolors.css",
+        path: "#{facesContext.externalContext.requestContextPath}/js/",
+        lineNumbers: true,
+        textWrapping: false,
+        indentUnit: 4,
+        parserConfig: {'strictErrors': true}
+    });
+</script>
+
 
     </ui:define>
 </ui:composition>

@@ -4,17 +4,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 	<f:view locale="#{facesContext.application.defaultLocale}">
 
 <head>
+ <c:set var="ctx" value="#{facesContext.externalContext.requestContextPath}" /> 
   <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
   <meta name="author" content="Edgar Silva" />
   <meta name="keywords" content="corerest, rest, Rest, WebServices, Groovy" />
   <meta name="description" content="A Cloud platform for REST Services" />
 
   <title>( | coreREST: A Cloud platform for REST Services | )</title>
-  <script src="#{facesContext.externalContext.requestContextPath}/js/codemirror.js" type="text/javascript"></script>
+      <script src="#{facesContext.externalContext.requestContextPath}/js/codemirror.js" type="text/javascript"></script>
   
   	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/highlight/shCore.js"></script>
 	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/highlight/shBrushDelphi.js"></script>
@@ -180,17 +182,6 @@
 
 </div>
 
-    <script type="text/javascript">
-    var editor = CodeMirror.fromTextArea('formservice:code', {
-        parserfile: ["#{facesContext.externalContext.requestContextPath}parsepython.js"],
-        stylesheet: "#{facesContext.externalContext.requestContextPath}/css/pythoncolors.css",
-        path: "#{facesContext.externalContext.requestContextPath}/js/",
-        lineNumbers: true,
-        textWrapping: false,
-        indentUnit: 4,
-        parserConfig: {'pythonVersion': 2, 'strictErrors': true}
-    });
-</script>
 
 
 

@@ -1,4 +1,4 @@
-/* CodeMirror main module (http://codemirror.net/)
+/* CodeMirror main module
  *
  * Implements the CodeMirror constructor and prototype, which take care
  * of initializing the editor frame, and providing the outside interface.
@@ -45,12 +45,9 @@ var CodeMirror = (function(){
     readOnly: false,
     width: "",
     height: "300px",
-    minHeight: 100,
     autoMatchParens: false,
     parserConfig: null,
     tabMode: "indent", // or "spaces", "default", "shift"
-    enterMode: "indent", // or "keep", "flat"
-    electricChars: true,
     reindentOnLoad: false,
     activeTokens: null,
     cursorActivity: null,
@@ -69,7 +66,6 @@ var CodeMirror = (function(){
       catch(e) {} // Seems to throw 'Not Implemented' on some IE8 versions
     }
     nums.style.top = "0px";
-    nums.style.left = "0px";
     nums.style.overflow = "hidden";
     container.appendChild(nums);
     scroller.className = "CodeMirror-line-numbers";
@@ -81,8 +77,6 @@ var CodeMirror = (function(){
   function frameHTML(options) {
     if (typeof options.parserfile == "string")
       options.parserfile = [options.parserfile];
-    if (typeof options.basefiles == "string")
-      options.basefiles = [options.basefiles];
     if (typeof options.stylesheet == "string")
       options.stylesheet = [options.stylesheet];
 
@@ -126,7 +120,7 @@ var CodeMirror = (function(){
     div.style.position = "relative";
     div.className = "CodeMirror-wrapping";
     div.style.width = options.width;
-    div.style.height = (options.height == "dynamic") ? options.minHeight + "px" : options.height;
+    div.style.height = options.height;
     // This is used by Editor.reroutePasteEvent
     var teHack = this.textareaHack = document.createElement("TEXTAREA");
     div.appendChild(teHack);
@@ -144,7 +138,7 @@ var CodeMirror = (function(){
         "document.write(window.frameElement.CodeMirror.html);document.close();})()";
     }
     else {
-      frame.src = "javascript:;";
+      frame.src = "javascript:false";
     }
 
     if (place.appendChild) place.appendChild(div);
@@ -165,7 +159,6 @@ var CodeMirror = (function(){
       if (this.options.initCallback) this.options.initCallback(this);
       if (this.options.lineNumbers) this.activateLineNumbers();
       if (this.options.reindentOnLoad) this.reindent();
-      if (this.options.height == "dynamic") this.setDynamicHeight();
     },
 
     getCode: function() {return this.editor.getCode();},
@@ -253,7 +246,6 @@ var CodeMirror = (function(){
     setIndentUnit: function(unit) {this.win.indentUnit = unit;},
     setUndoDepth: function(depth) {this.editor.history.maxDepth = depth;},
     setTabMode: function(mode) {this.options.tabMode = mode;},
-    setEnterMode: function(mode) {this.options.enterMode = mode;},
     setLineNumbers: function(on) {
       if (on && !this.lineNumbers) {
         this.lineNumbers = addLineNumberDiv(this.wrapping);
@@ -304,7 +296,6 @@ var CodeMirror = (function(){
     cursorLine: function() {
       return this.cursorPosition().line;
     },
-    cursorCoords: function(start) {return this.editor.cursorCoords(start);},
 
     activateLineNumbers: function() {
       var frame = this.frame, win = frame.contentWindow, doc = win.document, body = doc.body,
@@ -323,7 +314,7 @@ var CodeMirror = (function(){
 
         if (nums.offsetWidth != barWidth) {
           barWidth = nums.offsetWidth;
-          frame.parentNode.style.paddingLeft = barWidth + "px";
+          nums.style.left = "-" + (frame.parentNode.style.marginLeft = barWidth + "px");
         }
       }
       function doScroll() {
@@ -362,13 +353,12 @@ var CodeMirror = (function(){
       }
 
       function wrapping() {
-        var node, lineNum, next, pos, changes = [], styleNums = self.options.styleNumbers;
+        var node, lineNum, next, pos, changes = [];
 
-        function setNum(n, node) {
+        function setNum(n) {
           // Does not typically happen (but can, if you mess with the
           // document during the numbering)
           if (!lineNum) lineNum = scroller.appendChild(document.createElement("DIV"));
-          if (styleNums) styleNums(lineNum, node, n);
           // Changes are accumulated, so that the document layout
           // doesn't have to be recomputed during the pass
           changes.push(lineNum); changes.push(n);
@@ -385,7 +375,7 @@ var CodeMirror = (function(){
 
           var endTime = new Date().getTime() + self.options.lineNumberTime;
           while (node) {
-            setNum(next++, node.previousSibling);
+            setNum(next++);
             for (; node && !win.isBR(node); node = node.nextSibling) {
               var bott = node.offsetTop + node.offsetHeight;
               while (scroller.offsetHeight && bott - 3 > pos) setNum("&nbsp;");
@@ -397,13 +387,12 @@ var CodeMirror = (function(){
               return;
             }
           }
-          while (lineNum) setNum(next++);
           commitChanges();
           doScroll();
         }
-        function start(firstTime) {
+        function start() {
           doScroll();
-          ensureEnoughLineNumbers(firstTime);
+          ensureEnoughLineNumbers(false);
           node = body.firstChild;
           lineNum = scroller.firstChild;
           pos = 0;
@@ -411,7 +400,7 @@ var CodeMirror = (function(){
           work();
         }
 
-        start(true);
+        start();
         var pending = null;
         function update() {
           if (pending) clearTimeout(pending);
@@ -428,33 +417,7 @@ var CodeMirror = (function(){
           onResize();
         };
       }
-      (this.options.textWrapping || this.options.styleNumbers ? wrapping : nonWrapping)();
-    },
-
-    setDynamicHeight: function() {
-      var self = this, activity = self.options.cursorActivity, win = self.win, body = win.document.body,
-          lineHeight = null, timeout = null, vmargin = 2 * self.frame.offsetTop;
-      body.style.overflowY = "hidden";
-      win.document.documentElement.style.overflowY = "hidden";
-      this.frame.scrolling = "no";
-
-      function updateHeight() {
-        for (var span = body.firstChild, sawBR = false; span; span = span.nextSibling)
-          if (win.isSpan(span) && span.offsetHeight) {
-            lineHeight = span.offsetHeight;
-            if (!sawBR) vmargin = 2 * (self.frame.offsetTop + span.offsetTop + body.offsetTop + (internetExplorer ? 10 : 0));
-            break;
-          }
-        if (lineHeight)
-          self.wrapping.style.height = Math.max(vmargin + lineHeight * (body.getElementsByTagName("BR").length + 1),
-                                                self.options.minHeight) + "px";
-      }
-      setTimeout(updateHeight, 100);
-      self.options.cursorActivity = function(x) {
-        if (activity) activity(x);
-        clearTimeout(timeout);
-        timeout = setTimeout(updateHeight, 200);
-      };
+      (this.options.textWrapping ? wrapping : nonWrapping)();
     }
   };
 
@@ -507,18 +470,6 @@ var CodeMirror = (function(){
 
     area.style.display = "none";
     var mirror = new CodeMirror(insert, options);
-    mirror.toTextArea = function() {
-      area.parentNode.removeChild(mirror.wrapping);
-      area.style.display = "";
-      if (area.form) {
-        area.form.submit = realSubmit;
-        if (typeof area.form.removeEventListener == "function")
-          area.form.removeEventListener("submit", updateField, false);
-        else
-          area.form.detachEvent("onsubmit", updateField);
-      }
-    };
-
     return mirror;
   };
 

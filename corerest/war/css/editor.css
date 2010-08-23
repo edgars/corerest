@@ -25,10 +25,10 @@
 	background-color: #eee;
 	text-align: right;
 	padding-right: .3em;
-	font-size: 11pt;
+	font-size: 10pt;
 	font-family: monospace;
 	padding-top: .4em;
-	line-height: 20px;
+	line-height: 16px;
 }
 
 .CodeMirror-line-highlighter {
