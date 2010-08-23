@@ -28,6 +28,13 @@
   <action>#{scriptService.loadScript}</action>
 </url-mapping>
 
+
+<url-mapping id="runService">
+  <pattern value="/run/#{name:scriptService.scriptName}" />
+  <view-id>/run.faces</view-id>
+  <action>#{scriptService.loadScript4Run}</action>
+</url-mapping>
+
 <url-mapping id="editor">
    <pattern value="/manage"/>
    <view-id>/editservice.faces</view-id>

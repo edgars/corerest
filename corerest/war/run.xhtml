@@ -1,0 +1,82 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    template="layout/template.xhtml">
+
+    <ui:define name="body">
+    
+    <script type="text/javascript">
+	$(function() {
+		$("#tabs").tabs();
+	});
+	</script>
+    
+
+ <h1>Run Script: #{scriptService.script.name}</h1>
+    <p>
+   
+   
+   <div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Service Overview</a></li>
+		<li><a href="#tabs-2">Description</a></li>
+	</ul>
+	<div id="tabs-1">
+		<p>In the service <strong></strong> #{scriptService.script.name}, you had definied the following URI: </p>
+	
+		<p><strong>#{scriptService.script.uri}</strong></p>
+
+		<p>Between the braces {} you have the variables that this script supports:</p>
+
+        <h3>Click in the Following Link and replace the values between braces by valid values and press enter!
+        </h3>
+        
+         <p id="editme" class="editable" style="pointer:cursor">/service/#{scriptService.script.name}#{scriptService.script.uri}</p>
+
+         <p>Keep in mind that your service will work, just if you fill the parameters properly...</p>
+         <div id="retorno">
+         
+         </div>
+        
+	</div>
+	
+	
+	<div id="tabs-2">
+		<p>
+		  #{scriptService.script.description}
+		</p>
+		
+	</div>
+
+</div>
+   
+   
+   
+    </p>
+     <script>
+ 	$("#editme").editInPlace({
+		saving_animation_color: "#ECF2F8",
+		callback: function(idOfEditor, enteredText, orinalHTMLContent, settingsParams, animationCallbacks) {
+			animationCallbacks.didStartSaving();
+			setTimeout(animationCallbacks.didEndSaving, 2000);
+			var content = jQuery("p#editme").html();
+			$.get(content, function(data) {  
+				  alert('I will invoke now the following URL: ' + content);
+				  $("div#retorno").html(data);       
+				});
+
+			return enteredText;
+
+		}
+	});
+</script>
+
+
+     
+
+    </ui:define>
+</ui:composition>

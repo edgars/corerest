@@ -74,6 +74,19 @@ public class RestParser {
 		System.out.println(test5.parseTemplate().toString().equals("{}"));
 		System.out.println(test5.getVariableValues("/A/V/A/dsdfgd/sddsd/aaa")
 				.toString().equals("{}"));
+		
+		RestParser test6 = new RestParser("usa/{zipcode}");
+		
+		for (Entry<Integer, String> variable : test6.parseTemplate().entrySet()) {
+			   System.out.println(String.format("var pos >>>>>>>>>>>>>>  %s, value %s",variable.getKey(),variable.getValue()));
+			}
+		System.out.println("Template: " + test6.getVariableValues("/usa/90210"));
+		
+		
+		for (Entry<String, String> variable : test6.getVariableValues("/usa/90210").entrySet()) {
+		   System.out.println(String.format("var %s, value %s",variable.getKey(),variable.getValue()));
+		}
+		
 	}
 
 	public RestParser(String text) {

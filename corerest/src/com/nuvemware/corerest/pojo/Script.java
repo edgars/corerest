@@ -34,6 +34,9 @@ import javax.persistence.Id;
  */
 
 public class Script implements Serializable{
+	
+	public static final String GROOVY = "groovy";
+	public static final String RUBY = "ruby";
 
 
 	private static final long serialVersionUID = -1379639577316498282L;

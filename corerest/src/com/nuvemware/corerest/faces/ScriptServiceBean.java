@@ -3,12 +3,14 @@ package com.nuvemware.corerest.faces;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.googlecode.objectify.ObjectifyService;
+import com.nuvemware.corerest.framework.RestParser;
 import com.nuvemware.corerest.pojo.Script;
 import com.nuvemware.corerest.pojo.dao.ScriptDataObject;
 
@@ -29,6 +31,8 @@ public class ScriptServiceBean implements Serializable {
 	private Script script;
 	
 	private String scriptName;
+	
+	private RestParser parser;
 
 
 	private List<Script> scripts;
@@ -60,6 +64,13 @@ public class ScriptServiceBean implements Serializable {
 	 	 dao.add(script);
 		
          return "/services"	;	
+	}
+	
+	public String run(){
+		
+	 	 dao.add(script);
+		
+        return "/services"	;	
 	}
 	
 	public List<Script> getScripts() {
@@ -99,5 +110,36 @@ public class ScriptServiceBean implements Serializable {
 		}
 		
 		return "pretty:edit";
+	}
+	
+	public String loadScript4Run(){
+		
+		try {
+			this.script = (Script) dao.get("name", getScriptName());
+			
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return "pretty:run";
+	}
+
+
+
+
+	public void setParser(RestParser parser) {
+		this.parser = parser;
+	}
+
+
+
+
+	public RestParser getParser() {
+		return parser;
+	}
+	
+	public Map<Integer, String> getVars(){
+		this.parser = new RestParser(this.script.getUri());
+		return parser.parseTemplate();
 	}
 }

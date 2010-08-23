@@ -23,11 +23,20 @@
 
 package com.nuvemware.corerest.service;
 
+import java.util.Map.Entry;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.ext.Provider;
 
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.nuvemware.corerest.framework.RestParser;
+import com.nuvemware.corerest.pojo.Script;
+import com.nuvemware.corerest.pojo.dao.ScriptDataObject;
+
+import javax.script.*;
 
 /**
  * This is the base REST Service based on JAX-RS, this will allow any request to be processed
@@ -39,8 +48,25 @@ import javax.ws.rs.ext.Provider;
 @Provider
 @Path("/")
 
-public class RootService {
+public class RootService implements java.io.Serializable {
 	
+	
+	
+	private static final long serialVersionUID = -2125264566068793898L;
+	Script script = null;
+	
+	protected ScriptDataObject dao = new ScriptDataObject(Script.class);
+	
+    // create a script engine manager
+    protected ScriptEngineManager factory = new ScriptEngineManager();
+    
+    protected ScriptEngine engineGroovy = factory.getEngineByName(Script.GROOVY);
+    
+    protected ScriptEngine engineRuby = factory.getEngineByName(Script.RUBY);
+
+    protected RestParser parser ;
+
+
 	@GET
 	@Path("/")
 	@Produces("text/plain")
@@ -55,6 +81,71 @@ public class RootService {
 	public String homeHTML(){
 		
 		return "<h1><font face='Verdanda'>Welcome to RestEasy running on Google App - Client HTML</font></h1>";
+	}
+	
+	/**
+	 * This is the Service Execution itself, here we will receive 2 parameters
+	 * serviceName through the @PathParam name, and a list of VARs
+	 * It will call the Script Engine from JVM and will execute the service!
+	 * */
+	@GET
+	@Path("/{name}/{vars:.*}")
+	@Produces("text/plain")	
+	public String executeWithGet(@PathParam("name") String serviceName, @PathParam("vars") String vars){
+		
+		String execution = null;
+		try {
+			script = (Script) dao.get(serviceName);
+		} catch (EntityNotFoundException e) {
+			return "A Service with the name " + serviceName + " was not found in our service Repository...";
+		}
+		
+		parser = new RestParser(script.getUri());
+		parser.parseTemplate();
+		
+		System.out.println("URI>>> " + script.getUri());
+		
+		System.out.println("Vars>>> " + vars);
+		
+		System.out.println( "Parser: " + parser.getVariableValues("/".concat(vars)));
+		
+		if (Script.GROOVY.equalsIgnoreCase(script.getLanguage())) {
+			
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+
+				engineGroovy.put(variable.getKey(), variable.getValue());
+				
+			}
+			
+			try {
+				execution = (String) engineGroovy.eval(script.getSource());
+			} catch (ScriptException e) {
+				execution= "Errors found in the script execution: " + e.getMessage();
+			}
+			
+		}
+		
+		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
+			
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+				   
+			    	
+			    	engineRuby.put(variable.getKey(), variable.getValue());
+				
+			}
+			
+			try {
+				execution = (String) engineRuby.eval(script.getSource());
+				
+			} catch (ScriptException e) {
+				execution= "Errors found in the script execution: " + e.getMessage();
+			}
+			
+		}		
+		
+		
+		
+		return execution.toString();
 	}	
 	
 
