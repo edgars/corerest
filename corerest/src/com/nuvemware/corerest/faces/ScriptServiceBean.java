@@ -33,6 +33,8 @@ public class ScriptServiceBean implements Serializable {
 	private String scriptName;
 	
 	private RestParser parser;
+	
+	private String search;
 
 
 	private List<Script> scripts;
@@ -141,5 +143,26 @@ public class ScriptServiceBean implements Serializable {
 	public Map<Integer, String> getVars(){
 		this.parser = new RestParser(this.script.getUri());
 		return parser.parseTemplate();
+	}
+
+
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+
+
+
+	public String getSearch() {
+		return search;
+	}
+	
+	public String doSearch() {
+		
+		setScripts(dao.search("name", getSearch(), 50));
+		
+		return "pretty:services";
 	}
 }

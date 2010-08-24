@@ -37,7 +37,7 @@ input[type=text], input[type=password], select {
 }
 
 input[type=textarea] {
-	  font-family:Verdana,Tahoma,Arial,Sans-serif;
+	font-family:Verdana,Tahoma,Arial,Sans-serif;
 	font-weight:bold;
 	font-size: 12pt;
 	margin: 5px 5px 5px 0;
@@ -45,12 +45,21 @@ input[type=textarea] {
    
 span { color:red; }
 
-#editable {
-      font: 0.8em arial, sans-serif;
+.displayRun {
+border: 1px solid silver;
+font-family: Arial,Helvetica,sans-serif;
+font-size: large;
+color: white;
+background-color: #3f4051;
+}
+
+    
+.editable {
+      font: 16pt verdana,arial, sans-serif;
       color: steelblue;
       background-color: #FFFFFF;
       margin: 20px 40px 20px 40px;
-    }
+    }    
     
 .panelGrid {
 	font-family:Arial,Verdana,Tahoma,Sans-serif;

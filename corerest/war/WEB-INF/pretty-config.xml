@@ -40,6 +40,11 @@
    <view-id>/editservice.faces</view-id>
 </url-mapping>
 
+<url-mapping id="about">
+   <pattern value="/about"/>
+   <view-id>/about.faces</view-id>
+</url-mapping>
+
 
 
    <!-- Begin UrlMappings 

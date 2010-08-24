@@ -36,10 +36,9 @@
 				
 							    <h:messages errorStyle="color:red;font-weight:bold; font-family:Verdana,Tahoma,Arial,Sans-serif;font-size:14pt;"/>
 									<span class="formInfo"><a href="tip/urimapping.html?width=375" class="jTip" id="one" name="Your service need a name!">Name:</a></span> <br></br>
-								<h:inputText value="#{scriptService.script.name}" size="20" required="true" requiredMessage="Hey Buddy! Your script must have a name, please fill it..."/>
-   	                            <h:commandButton value="Go" action="#{scriptService.save}"/>
-   	                            
-   	                            <p>Or, see the first 100 Stored Services below </p>
+								<h:inputText value="#{scriptService.search}" size="20" required="true" requiredMessage="Hey Buddy! Enter with a name please!"/>
+   	                            <h:commandButton value="Go" action="#{scriptService.doSearch}"/>
+                                <br></br>, see the first 100 Stored Services below
 
                 </h:form>
 				
@@ -61,8 +60,6 @@
 				   
 				</ul>
 				<h:panelGrid columns="4" cellpadding="20">
-				<h:outputLink value="http://java.net"> 
-				<h:graphicImage value="images/debugFodao.png" style="border:0" title="Click here to Debug the script service #{row.name}"/> </h:outputLink>
 
 				<h:outputLink value="/run/#{row.name}"> 
 				<h:graphicImage value="images/runFodao.png" style="border:0" title="Click here to Execute the script service #{row.name}"/> </h:outputLink>

@@ -70,6 +70,12 @@ public abstract class AbstractPersistentObject<T> extends DAOBase
 		
 		return ofy().query(clazz).limit(maxResults).list();
 	}
+	
+	public List<T> search(String field, String value, Integer maxResults)
+
+	{
+		return ofy().query(clazz).filter(String.format("%s >=",field), value).filter(String.format("%s <",field), value + "\uFFFD").limit(maxResults).list(); 
+	}
 
 
 	public void delete(T entity)

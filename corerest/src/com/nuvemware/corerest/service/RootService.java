@@ -93,7 +93,7 @@ public class RootService implements java.io.Serializable {
 	@Produces("text/plain")	
 	public String executeWithGet(@PathParam("name") String serviceName, @PathParam("vars") String vars){
 		
-		String execution = null;
+		Object execution = null;
 		try {
 			script = (Script) dao.get(serviceName);
 		} catch (EntityNotFoundException e) {
@@ -102,12 +102,6 @@ public class RootService implements java.io.Serializable {
 		
 		parser = new RestParser(script.getUri());
 		parser.parseTemplate();
-		
-		System.out.println("URI>>> " + script.getUri());
-		
-		System.out.println("Vars>>> " + vars);
-		
-		System.out.println( "Parser: " + parser.getVariableValues("/".concat(vars)));
 		
 		if (Script.GROOVY.equalsIgnoreCase(script.getLanguage())) {
 			
@@ -118,7 +112,7 @@ public class RootService implements java.io.Serializable {
 			}
 			
 			try {
-				execution = (String) engineGroovy.eval(script.getSource());
+				execution =  engineGroovy.eval(script.getSource());
 			} catch (ScriptException e) {
 				execution= "Errors found in the script execution: " + e.getMessage();
 			}
@@ -127,15 +121,21 @@ public class RootService implements java.io.Serializable {
 		
 		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
 			
+			System.out.println("parsing >>>>" + parser.getVariableValues("/".concat(vars)) );
+			System.out.println("VARs >>>>" + vars);
+			System.out.println("uri>>>>" + script.getUri() );
+			
+			if (null != engineRuby) {
+			
 			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
 				   
 			    	
 			    	engineRuby.put(variable.getKey(), variable.getValue());
 				
-			}
+			} } else {return "JRUBY NULL"; }
 			
 			try {
-				execution = (String) engineRuby.eval(script.getSource());
+				execution =  engineRuby.eval(script.getSource());
 				
 			} catch (ScriptException e) {
 				execution= "Errors found in the script execution: " + e.getMessage();

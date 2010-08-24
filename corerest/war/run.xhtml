@@ -17,6 +17,11 @@
     
 
  <h1>Run Script: #{scriptService.script.name}</h1>
+       <div id="submenu">
+ <div class="verticalSpacer">&nbsp;</div>
+      <a href="#{facesContext.externalContext.requestContextPath}/add" title="Add a new Service in the CoreRest/GAE Environment" class="add">Add New Service</a> <span class="noDisplay"> | </span>
+      <a href="#{facesContext.externalContext.requestContextPath}/services" title="List All Services" class="gallery">List Services</a> <span class="noDisplay"> | </span>
+  </div>
     <p>
    
    
@@ -37,8 +42,13 @@
         
          <p id="editme" class="editable" style="pointer:cursor">/service/#{scriptService.script.name}#{scriptService.script.uri}</p>
 
-         <p>Keep in mind that your service will work, just if you fill the parameters properly...</p>
-         <div id="retorno">
+         <h1>Execution Result</h1>
+          <div style="border: 1px solid black; padding: 0px;"> 
+          
+         <pre id="retorno">
+         
+         </pre>
+         
          
          </div>
         
@@ -46,9 +56,9 @@
 	
 	
 	<div id="tabs-2">
-		<p>
+		<pre>
 		  #{scriptService.script.description}
-		</p>
+		</pre>
 		
 	</div>
 
@@ -62,11 +72,12 @@
 		saving_animation_color: "#ECF2F8",
 		callback: function(idOfEditor, enteredText, orinalHTMLContent, settingsParams, animationCallbacks) {
 			animationCallbacks.didStartSaving();
-			setTimeout(animationCallbacks.didEndSaving, 2000);
+			setTimeout(animationCallbacks.didEndSaving, 3000);
 			var content = jQuery("p#editme").html();
 			$.get(content, function(data) {  
 				  alert('I will invoke now the following URL: ' + content);
-				  $("div#retorno").html(data);       
+				  $("pre#retorno").html(data);   
+				  alert('Result: ' + data);    
 				});
 
 			return enteredText;
