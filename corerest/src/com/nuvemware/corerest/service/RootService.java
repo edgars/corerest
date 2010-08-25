@@ -23,6 +23,7 @@
 
 package com.nuvemware.corerest.service;
 
+import java.util.List;
 import java.util.Map.Entry;
 
 import javax.ws.rs.GET;
@@ -37,6 +38,7 @@ import com.nuvemware.corerest.pojo.Script;
 import com.nuvemware.corerest.pojo.dao.ScriptDataObject;
 
 import javax.script.*;
+
 
 /**
  * This is the base REST Service based on JAX-RS, this will allow any request to be processed
@@ -121,24 +123,35 @@ public class RootService implements java.io.Serializable {
 		
 		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
 			
+			
+			
+			System.out.println("Factories: " + factory.getEngineFactories());
+			
+			for (ScriptEngineFactory var : factory.getEngineFactories()) {
+				System.out.println(String.format("Engine %s , Language:(%s), Version %s",var.getEngineName(), var.getLanguageName(), var.getLanguageVersion()));
+			}
+			
 			System.out.println("parsing >>>>" + parser.getVariableValues("/".concat(vars)) );
 			System.out.println("VARs >>>>" + vars);
 			System.out.println("uri>>>>" + script.getUri() );
 			
-			if (null != engineRuby) {
+			
 			
 			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
 				   
-			    	
-			    	engineRuby.put(variable.getKey(), variable.getValue());
+                factory.put(variable.getKey(), variable.getValue());		    	
 				
-			} } else {return "JRUBY NULL"; }
+				
+			} 
 			
 			try {
+				engineRuby = factory.getEngineByName("ruby");
 				execution =  engineRuby.eval(script.getSource());
+				System.out.println("PASSOU PORRA!");
 				
-			} catch (ScriptException e) {
+			} catch (Exception e) {
 				execution= "Errors found in the script execution: " + e.getMessage();
+				e.printStackTrace();
 			}
 			
 		}		
