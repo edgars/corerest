@@ -135,18 +135,24 @@ public class RootService implements java.io.Serializable {
 			System.out.println("VARs >>>>" + vars);
 			System.out.println("uri>>>>" + script.getUri() );
 			
+			// Create a JRuby engine.
+		      ScriptEngine engine = factory.getEngineByName("ruby");
+
+
+
+			
 			
 			
 			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
 				   
-                factory.put(variable.getKey(), variable.getValue());		    	
+                engine.put(variable.getKey(), variable.getValue());		    	
 				
 				
 			} 
 			
 			try {
-				engineRuby = factory.getEngineByName("ruby");
-				execution =  engineRuby.eval(script.getSource());
+				//engineRuby = factory.getEngineByName("ruby");
+				execution =  engine.eval(script.getSource());
 				System.out.println("PASSOU PORRA!");
 				
 			} catch (Exception e) {
