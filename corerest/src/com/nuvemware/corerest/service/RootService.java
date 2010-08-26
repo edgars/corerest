@@ -23,7 +23,6 @@
 
 package com.nuvemware.corerest.service;
 
-import java.util.List;
 import java.util.Map.Entry;
 
 import javax.ws.rs.GET;
@@ -64,7 +63,7 @@ public class RootService implements java.io.Serializable {
     
     protected ScriptEngine engineGroovy = factory.getEngineByName(Script.GROOVY);
     
-    protected ScriptEngine engineRuby = factory.getEngineByName(Script.RUBY);
+    protected ScriptEngine engineRuby;
 
     protected RestParser parser ;
 
@@ -123,40 +122,135 @@ public class RootService implements java.io.Serializable {
 		
 		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
 			
+			for (ScriptEngineFactory var : factory.getEngineFactories()) {
+				System.out.println(String.format("Engine %s , Language:(%s), Version %s",var.getEngineName(), var.getLanguageName(), var.getLanguageVersion()));
+			}
+		    engineRuby = factory.getEngineByName(Script.RUBY);
+		    
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+				engineRuby.put(variable.getKey(), variable.getValue());		    	
+			} 
 			
+			try {
+				execution =  engineRuby.eval(script.getSource());
+				
+			} catch (Exception e) {
+				execution= "Errors found in the script execution, see the following error messages: " + e.getMessage();
+				e.printStackTrace();
+			}
 			
-			System.out.println("Factories: " + factory.getEngineFactories());
+		}		
+		
+		
+		
+		return execution.toString();
+	}	
+	
+	
+	@GET
+	@Path("/{name}/{vars:.*}")
+	@Produces("application/xml")	
+	public String executeWithGetXML(@PathParam("name") String serviceName, @PathParam("vars") String vars){
+		
+		Object execution = null;
+		try {
+			script = (Script) dao.get(serviceName);
+		} catch (EntityNotFoundException e) {
+			return "A Service with the name " + serviceName + " was not found in our service Repository...";
+		}
+		
+		parser = new RestParser(script.getUri());
+		parser.parseTemplate();
+		
+		if (Script.GROOVY.equalsIgnoreCase(script.getLanguage())) {
+			
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+
+				engineGroovy.put(variable.getKey(), variable.getValue());
+				
+			}
+			
+			try {
+				execution =  engineGroovy.eval(script.getSource());
+			} catch (ScriptException e) {
+				execution= "Errors found in the script execution: " + e.getMessage();
+			}
+			
+		}
+		
+		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
 			
 			for (ScriptEngineFactory var : factory.getEngineFactories()) {
 				System.out.println(String.format("Engine %s , Language:(%s), Version %s",var.getEngineName(), var.getLanguageName(), var.getLanguageVersion()));
 			}
-			
-			System.out.println("parsing >>>>" + parser.getVariableValues("/".concat(vars)) );
-			System.out.println("VARs >>>>" + vars);
-			System.out.println("uri>>>>" + script.getUri() );
-			
-			// Create a JRuby engine.
-		      ScriptEngine engine = factory.getEngineByName("ruby");
-
-
-
-			
-			
-			
+		    engineRuby = factory.getEngineByName(Script.RUBY);
+		    
 			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
-				   
-                engine.put(variable.getKey(), variable.getValue());		    	
-				
-				
+				engineRuby.put(variable.getKey(), variable.getValue());		    	
 			} 
 			
 			try {
-				//engineRuby = factory.getEngineByName("ruby");
-				execution =  engine.eval(script.getSource());
-				System.out.println("PASSOU PORRA!");
+				execution =  engineRuby.eval(script.getSource());
 				
 			} catch (Exception e) {
+				execution= "Errors found in the script execution, see the following error messages: " + e.getMessage();
+				e.printStackTrace();
+			}
+			
+		}		
+		
+		
+		
+		return execution.toString();
+	}	
+	
+	@GET
+	@Path("/{name}/{vars:.*}")
+	@Produces("application/json")	
+	public String executeWithGetJSON(@PathParam("name") String serviceName, @PathParam("vars") String vars){
+		
+		Object execution = null;
+		try {
+			script = (Script) dao.get(serviceName);
+		} catch (EntityNotFoundException e) {
+			return "A Service with the name " + serviceName + " was not found in our service Repository...";
+		}
+		
+		parser = new RestParser(script.getUri());
+		parser.parseTemplate();
+		
+		if (Script.GROOVY.equalsIgnoreCase(script.getLanguage())) {
+			
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+
+				engineGroovy.put(variable.getKey(), variable.getValue());
+				
+			}
+			
+			try {
+				execution =  engineGroovy.eval(script.getSource());
+			} catch (ScriptException e) {
 				execution= "Errors found in the script execution: " + e.getMessage();
+			}
+			
+		}
+		
+		if (Script.RUBY.equalsIgnoreCase(script.getLanguage())) {
+			
+			for (ScriptEngineFactory var : factory.getEngineFactories()) {
+				System.out.println(String.format("Engine %s , Language:(%s), Version %s",var.getEngineName(), var.getLanguageName(), var.getLanguageVersion()));
+			}
+		    engineRuby = factory.getEngineByName(Script.RUBY);
+		    
+			for (Entry<String, String> variable : parser.getVariableValues("/".concat(vars)).entrySet()) {
+				engineRuby.put(variable.getKey(), variable.getValue());		    	
+			} 
+			
+			try {
+				execution =  engineRuby.eval(script.getSource());
+				
+			} catch (Exception e) {
+				execution= "Errors found in the script execution, see the following error messages: " + e.getMessage();
 				e.printStackTrace();
 			}
 			
